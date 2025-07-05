@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoAI Reasoning Map</title>
 
+  <!-- Leaflet CSS CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧠 GeoAI: Smart Zone Recommender</h1>
+
+    <form id="questionForm">
+      <input type="text" id="question" placeholder="Ask a spatial question..." required />
+      <button type="submit">Ask AI</button>
+    </form>
+
+    <div id="result" class="answer-box">Answer will appear here...</div>
+
+    <div id="map"></div>
+  </div>
+
+  <!-- Leaflet JS CDN -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Map and fetch script -->
+  <script src="map.js"></script>
+</body>
+</html>
