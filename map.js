@@ -1,23 +1,21 @@
 // 🌍 Initialize Leaflet map
 const map = L.map('map').setView([28.75, 77.2], 11);
 
-// 🗺️ Load OpenStreetMap base layer
+// 🗺️ Add OpenStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// 🌐 Global variables
 let geoJsonLayer = null;
 let geoData = null;
 let lastHighlight = null;
 
-// 📦 Load your zones.geojson from GitHub Pages
+// 📦 Load your zones.geojson from GitHub
 fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
   .then(response => response.json())
   .then(data => {
     geoData = data;
 
-    // Draw zones on map
     geoJsonLayer = L.geoJSON(geoData, {
       onEachFeature: (feature, layer) => {
         const props = feature.properties;
@@ -32,7 +30,7 @@ fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
     alert("Failed to load zone data.");
   });
 
-// 🧠 Ask AI and highlight result
+// 🧠 Ask AI and highlight answer
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const question = document.getElementById("question").value.trim();
@@ -49,7 +47,6 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
       const answer = data.answer || "❌ No answer from AI.";
       result.innerText = answer;
 
-      // Try to extract: Answer: Zone X
       const match = answer.match(/Zone\s([A-Z])/i);
       if (match && geoJsonLayer) {
         const zoneName = `Zone ${match[1].toUpperCase()}`;
@@ -59,10 +56,8 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
           if (props.name === zoneName) {
             const [lng, lat] = layer.feature.geometry.coordinates;
 
-            // Remove previous highlight if any
             if (lastHighlight) map.removeLayer(lastHighlight);
 
-            // Add glowing highlight circle
             lastHighlight = L.circleMarker([lat, lng], {
               radius: 12,
               color: "#00ff00",
@@ -70,7 +65,6 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
               fillOpacity: 0.5
             }).addTo(map).bindPopup(`✅ AI chose: ${zoneName}`).openPopup();
 
-            // Focus on chosen zone
             map.setView([lat, lng], 13);
           }
         });
