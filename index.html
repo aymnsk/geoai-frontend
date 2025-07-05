@@ -2,89 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GeoAI — Smart Zone Recommender</title>
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
+  <title>🧠 GeoAI — Smart Zone Recommender</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    body { margin: 0; font-family: sans-serif; }
+    #map { height: 90vh; }
+    #questionForm {
       display: flex;
-      flex-direction: column;
-      height: 100vh;
+      padding: 1em;
+      gap: 0.5em;
+      background: #f0f0f0;
+      align-items: center;
     }
-
-    header {
-      background-color: #282c34;
-      color: white;
-      padding: 1rem;
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    form {
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-      background: #f9f9f9;
-      border-bottom: 1px solid #ddd;
-    }
-
-    input[type="text"] {
-      width: 60%;
-      padding: 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button {
-      padding: 0.6rem 1rem;
-      margin-left: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    #result {
-      padding: 0.75rem;
-      text-align: center;
-      font-weight: bold;
-      color: #333;
-    }
-
-    #map {
-      flex-grow: 1;
-      height: 100%;
-    }
+    #question { flex: 1; padding: 0.5em; font-size: 1em; }
+    #result { padding: 1em; background: #e8ffe8; font-size: 1em; }
+    button { padding: 0.5em 1em; font-weight: bold; background: #00b894; color: white; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
-
-  <header>🧠 GeoAI — Smart Zone Recommender</header>
-
-  <form id="questionForm">
-    <input type="text" id="question" placeholder="Ask GeoAI (e.g. Where is safest zone?)" required />
+  <div id="questionForm">
+    <input type="text" id="question" placeholder="Best zone to build a hospital?" />
     <button type="submit">Ask AI</button>
-  </form>
-
-  <div id="result">Waiting for question...</div>
-
+  </div>
+  <div id="result">🧠 Ask something about the map above...</div>
   <div id="map"></div>
 
-  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Your Custom JS -->
   <script src="map.js"></script>
-
 </body>
 </html>
