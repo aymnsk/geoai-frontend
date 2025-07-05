@@ -1,17 +1,22 @@
-// 🌍 Initialize the map
+// 🌍 Initialize map
 var map = L.map('map').setView([28.75, 77.2], 11);
 
-// 🗺️ Add base map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// 📦 Load GeoJSON data from GitHub
+// 🌐 Global variable to hold GeoJSON data
+let geoJsonLayer;
+let geoData = null;
+
+// 🔃 Load zones.geojson from GitHub and store
 fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
   .then(response => response.json())
   .then(geojson => {
-    // 🧩 Add features to map
-    L.geoJSON(geojson, {
+    geoData = geojson; // Store for later use
+
+    // Add features to map and store reference
+    geoJsonLayer = L.geoJSON(geojson, {
       onEachFeature: function (feature, layer) {
         const props = feature.properties;
         layer.bindPopup(
@@ -24,7 +29,7 @@ fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
     console.error("❌ Failed to load GeoJSON:", err);
   });
 
-// 📤 Handle form and talk to AI backend
+// 🚀 Send question to backend and highlight zone
 document.getElementById('questionForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -34,14 +39,35 @@ document.getElementById('questionForm').addEventListener('submit', function(e) {
 
   fetch("https://b6fb71eb-1f14-4fe4-a8ff-750b06611f40-00-312lb97pq5f33.sisko.replit.dev/ask", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question: question })
   })
   .then(response => response.json())
   .then(data => {
-    resultBox.innerText = data.answer || "❌ No response from AI";
+    const answer = data.answer || "❌ No response from AI";
+    resultBox.innerText = answer;
+
+    // ✅ Highlight the recommended zone
+    const match = answer.match(/Zone\s([A-Z])/i);
+    if (match && geoData) {
+      const targetName = `Zone ${match[1]}`;
+
+      // Search GeoJSON features
+      geoJsonLayer.eachLayer(layer => {
+        const zoneName = layer.feature.properties.name;
+        if (zoneName === targetName) {
+          // 🔥 Highlight
+          const coords = layer.feature.geometry.coordinates.reverse();
+          L.circleMarker(coords, {
+            radius: 12,
+            color: "#00ff00",
+            fillColor: "#00ff00",
+            fillOpacity: 0.5
+          }).addTo(map).bindPopup(`✅ Recommended: ${targetName}`).openPopup();
+          map.setView(coords, 13);
+        }
+      });
+    }
   })
   .catch(error => {
     console.error("❌ Error:", error);
