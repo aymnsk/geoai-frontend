@@ -1,26 +1,30 @@
-// Initialize the map
-var map = L.map('map').setView([28.7, 77.1], 11);
+// 🌍 Initialize the map
+var map = L.map('map').setView([28.75, 77.2], 11);
 
-// Add OpenStreetMap base layer
+// 🗺️ Add base map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Sample zone data (same as backend, ideally fetched from backend in future)
-const zones = [
-  { name: "Zone A", coords: [28.7, 77.1], color: 'green' },
-  { name: "Zone B", coords: [28.8, 77.2], color: 'red' },
-  { name: "Zone C", coords: [28.75, 77.15], color: 'blue' }
-];
+// 📦 Load GeoJSON data from GitHub
+fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
+  .then(response => response.json())
+  .then(geojson => {
+    // 🧩 Add features to map
+    L.geoJSON(geojson, {
+      onEachFeature: function (feature, layer) {
+        const props = feature.properties;
+        layer.bindPopup(
+          `<b>${props.name}</b><br>Flood Risk: ${props.flood_risk}<br>Population: ${props.population}`
+        );
+      }
+    }).addTo(map);
+  })
+  .catch(err => {
+    console.error("❌ Failed to load GeoJSON:", err);
+  });
 
-// Place markers on map
-zones.forEach(zone => {
-  L.marker(zone.coords)
-    .addTo(map)
-    .bindPopup(zone.name);
-});
-
-// Handle form submission
+// 📤 Handle form and talk to AI backend
 document.getElementById('questionForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -40,7 +44,7 @@ document.getElementById('questionForm').addEventListener('submit', function(e) {
     resultBox.innerText = data.answer || "❌ No response from AI";
   })
   .catch(error => {
-    console.error("Error:", error);
+    console.error("❌ Error:", error);
     resultBox.innerText = "❌ Failed to connect to backend.";
   });
 });
