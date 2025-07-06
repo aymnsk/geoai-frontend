@@ -12,7 +12,7 @@ let geoData = null;
 let lastHighlight = null;
 
 // 📦 Load zones.geojson from GitHub Pages
-fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
+"fetch("https://raw.githubusercontent.com/aymnsk/geoai-frontend/main/data/zones.geojson")
   .then(response => response.json())
   .then(data => {
     geoData = data;
