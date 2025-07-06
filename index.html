@@ -4,46 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🧠 GeoAI — Smart Zone Recommender</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+
+  <!-- 🌍 Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    crossorigin=""
+  />
+
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
     }
+
     #map {
-      flex: 1;
-      height: 70vh;
+      height: 75vh;
+      width: 100%;
     }
-    .controls {
-      padding: 1rem;
-      background: #f4f4f4;
-      border-top: 1px solid #ccc;
+
+    .container {
+      padding: 15px;
+      text-align: center;
     }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     #result {
-      margin-top: 1rem;
+      margin-top: 15px;
       font-weight: bold;
-      color: #333;
     }
   </style>
 </head>
 <body>
-
   <div id="map"></div>
 
-  <div class="controls">
+  <div class="container">
+    <h2>🧠 GeoAI — Smart Zone Recommender</h2>
     <form id="questionForm">
-      <label for="question">🧠 Ask a GeoAI question:</label><br />
-      <input type="text" id="question" placeholder="e.g. Best zone to build a hospital?" size="50" required />
+      <input type="text" id="question" placeholder="Ask something like 'Best zone to build a hospital?'" required />
+      <br />
       <button type="submit">Ask AI</button>
     </form>
-    <div id="result">🤖 Ask something smart...</div>
+    <div id="result">🤖 Waiting for your question...</div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <!-- 📍 Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    crossorigin=""
+  ></script>
+
+  <!-- 🔗 Map logic -->
   <script src="map.js"></script>
 </body>
 </html>
