@@ -1,33 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>🧠 GeoAI — Smart Zone Recommender</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <!-- Custom CSS -->
   <style>
-    body { margin: 0; font-family: sans-serif; }
-    #map { height: 90vh; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+    }
+    #map {
+      height: 80vh;
+    }
     #questionForm {
       display: flex;
-      padding: 1em;
-      gap: 0.5em;
-      background: #f0f0f0;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       align-items: center;
+      gap: 0.5rem;
     }
-    #question { flex: 1; padding: 0.5em; font-size: 1em; }
-    #result { padding: 1em; background: #e8ffe8; font-size: 1em; }
-    button { padding: 0.5em 1em; font-weight: bold; background: #00b894; color: white; border: none; cursor: pointer; }
+    #question {
+      flex: 1;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      background: #00b894;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #result {
+      padding: 1rem;
+      background: #e0ffe0;
+      font-size: 1rem;
+      color: #333;
+    }
   </style>
 </head>
 <body>
-  <div id="questionForm">
-    <input type="text" id="question" placeholder="Best zone to build a hospital?" />
+
+  <!-- 💬 Ask AI -->
+  <form id="questionForm">
+    <input type="text" id="question" placeholder="e.g., Best zone to build a hospital?" required />
     <button type="submit">Ask AI</button>
-  </div>
-  <div id="result">🧠 Ask something about the map above...</div>
+  </form>
+
+  <!-- ✅ AI Response -->
+  <div id="result">🧠 Ask something about the zones...</div>
+
+  <!-- 🗺️ Map Container -->
   <div id="map"></div>
 
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+  <!-- Map & Logic -->
   <script src="map.js"></script>
+
 </body>
 </html>
