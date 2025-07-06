@@ -1,23 +1,23 @@
-// 🌍 Initialize the map
-const map = L.map('map').setView([28.75, 77.2], 11);
+// 🌍 Initialize map
+const map = L.map("map").setView([28.75, 77.2], 11);
 
-// 🗺️ Add OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
+// 🗺️ Add base map layer
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-// 🌐 Global state
+// 🔁 Global state
 let geoJsonLayer = null;
 let geoData = null;
 let lastHighlight = null;
 
-// 📦 Load zones.geojson from GitHub Pages
-fetch("https://raw.githubusercontent.com/aymnsk/geoai-frontend/main/data/zones.geojson")
-  .then(response => response.json())
+// 📦 Load GeoJSON from GitHub Pages
+fetch("https://aymnsk.github.io/geoai-frontend/data/zones.geojson")
+  .then(res => res.json())
   .then(data => {
     geoData = data;
 
-    // Display all zones
+    // 🎯 Draw zones
     geoJsonLayer = L.geoJSON(geoData, {
       onEachFeature: (feature, layer) => {
         const props = feature.properties;
@@ -27,12 +27,12 @@ fetch("https://raw.githubusercontent.com/aymnsk/geoai-frontend/main/data/zones.g
       }
     }).addTo(map);
   })
-  .catch(error => {
-    console.error("❌ Failed to load GeoJSON:", error);
+  .catch(err => {
+    console.error("❌ Failed to load GeoJSON:", err);
     alert("Error loading zone data");
   });
 
-// 🧠 Handle AI query
+// 🧠 Submit question to AI
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -47,10 +47,10 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
   })
     .then(res => res.json())
     .then(data => {
-      const answer = data.answer || "❌ No answer from AI.";
+      const answer = data.answer || "❌ No response from AI.";
       result.innerText = answer;
 
-      // Highlight zone if mentioned in response (e.g., "Zone C")
+      // 🔍 Parse zone from answer
       const match = answer.match(/Zone\s([A-Z])/i);
       if (match && geoJsonLayer) {
         const zoneName = `Zone ${match[1].toUpperCase()}`;
@@ -62,6 +62,7 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
           if (props.name === zoneName) {
             const [lng, lat] = coords;
 
+            // 💡 Highlight the selected zone
             if (lastHighlight) map.removeLayer(lastHighlight);
 
             lastHighlight = L.circleMarker([lat, lng], {
@@ -69,7 +70,10 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
               color: "#00ff00",
               fillColor: "#00ff00",
               fillOpacity: 0.6
-            }).addTo(map).bindPopup(`✅ AI chose: ${zoneName}`).openPopup();
+            })
+              .addTo(map)
+              .bindPopup(`✅ AI chose: ${zoneName}`)
+              .openPopup();
 
             map.setView([lat, lng], 13);
           }
@@ -78,6 +82,6 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
     })
     .catch(err => {
       console.error("❌ Backend error:", err);
-      result.innerText = "❌ Failed to connect to AI backend.";
+      result.innerText = "❌ Could not connect to GeoAI backend.";
     });
 });
