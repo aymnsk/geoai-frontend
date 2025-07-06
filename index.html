@@ -5,87 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🧠 GeoAI — Smart Zone Recommender</title>
 
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-o9N1j7kF4zYkDCEV4nE++PSQKkDzLZVX+4x/efkfsCw="
-    crossorigin=""
-  />
+  <!-- ✅ Leaflet (without integrity attributes to avoid blocking) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       height: 100vh;
     }
 
-    #header {
-      background-color: #1e1e1e;
-      color: white;
-      padding: 1rem;
-      text-align: center;
+    #map {
+      height: 60vh;
     }
 
-    #questionForm {
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-      background: #f5f5f5;
+    main {
+      padding: 1em;
     }
 
-    #question {
-      width: 50%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-right: 0.5rem;
-    }
-
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
+    form {
+      margin-bottom: 1em;
     }
 
     #result {
-      text-align: center;
-      padding: 0.5rem;
-      font-weight: bold;
-    }
-
-    #map {
-      flex: 1;
+      background: #f4f4f4;
+      padding: 1em;
+      border-radius: 8px;
+      min-height: 50px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
-
 <body>
-  <div id="header">
+  <div id="map"></div>
+
+  <main>
     <h1>🧠 GeoAI — Smart Zone Recommender</h1>
-  </div>
+    <form id="questionForm">
+      <input type="text" id="question" placeholder="Ask: Best zone to build a hospital?" style="width: 60%;" required />
+      <button type="submit">Ask AI</button>
+    </form>
+    <div id="result">Answer will appear here...</div>
+  </main>
 
-  <form id="questionForm">
-    <input type="text" id="question" placeholder="Ask a question like: Best zone to build a school?" required />
-    <button type="submit">Ask AI</button>
-  </form>
-
-  <div id="result">🤖 Ask a location-based question...</div>
-
-  <div id="map" style="height: 100%;"></div>
-
-  <!-- Leaflet JS -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-pMH4kGBtx1iLL+1uRf3a0KyMEuUpDtD9I+f2lD1JkTw="
-    crossorigin=""
-  ></script>
-
-  <!-- Main Map Logic -->
+  <!-- ✅ Your map logic -->
   <script src="map.js"></script>
 </body>
 </html>
