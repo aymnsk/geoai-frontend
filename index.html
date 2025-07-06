@@ -3,92 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🧠 GeoAI — Smart Zone Recommender</title>
+  <title>GeoAI Reasoning Map</title>
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet CSS CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    header {
-      background: #0e2f44;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
-    #formContainer {
-      padding: 15px;
-      background: #f9f9f9;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    #question {
-      width: 300px;
-      padding: 8px;
-      font-size: 1rem;
-    }
-
-    #askBtn {
-      padding: 8px 16px;
-      font-size: 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    #askBtn:hover {
-      background: #0056b3;
-    }
-
-    #result {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 10px;
-      color: #333;
-    }
-
-    #map {
-      flex-grow: 1;
-    }
-
-    #map, html, body {
-      width: 100%;
-    }
-  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <h1>🧠 GeoAI: Smart Zone Recommender</h1>
 
-  <header>🧠 GeoAI — Smart Zone Recommender</header>
+    <form id="questionForm">
+      <input type="text" id="question" placeholder="Ask a spatial question..." required />
+      <button type="submit">Ask AI</button>
+    </form>
 
-  <form id="questionForm">
-    <div id="formContainer">
-      <input type="text" id="question" placeholder="Ask a location question..." required />
-      <button id="askBtn" type="submit">Ask AI</button>
-    </div>
-  </form>
+    <div id="result" class="answer-box">Answer will appear here...</div>
 
-  <div id="result">💬 Ask GeoAI anything about the zones...</div>
-  <div id="map" style="height: 60vh;"></div>
+    <div id="map"></div>
+  </div>
 
-  <!-- Leaflet JS -->
+  <!-- Leaflet JS CDN -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <!-- Your map logic -->
+  <!-- Map and fetch script -->
   <script src="map.js"></script>
-
 </body>
 </html>
