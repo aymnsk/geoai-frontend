@@ -1,7 +1,7 @@
-// 🌍 Initialize the Leaflet map
+// 🌍 Initialize Leaflet map
 const map = L.map('map').setView([28.75, 77.2], 11);
 
-// 🗺️ Add OpenStreetMap base layer
+// 🗺️ Add OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
@@ -11,12 +11,13 @@ let geoJsonLayer = null;
 let geoData = null;
 let lastHighlight = null;
 
-// 📦 Load local GeoJSON from /data/zones.geojson
+// 📦 Load local GeoJSON hosted in GitHub Pages
 fetch("data/zones.geojson")
   .then(response => response.json())
   .then(data => {
     geoData = data;
 
+    // Add GeoJSON zones to the map
     geoJsonLayer = L.geoJSON(geoData, {
       onEachFeature: (feature, layer) => {
         const props = feature.properties;
@@ -28,10 +29,10 @@ fetch("data/zones.geojson")
   })
   .catch(error => {
     console.error("❌ Failed to load GeoJSON:", error);
-    alert("Error loading zone data.");
+    alert("Could not load map zones.");
   });
 
-// 🧠 Submit question to backend AI
+// 🧠 Ask AI and highlight result
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -49,7 +50,7 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
       const answer = data.answer || "❌ No answer from AI.";
       result.innerText = answer;
 
-      // Extract zone from "Answer: Zone X"
+      // 🔍 Try to find the mentioned zone (e.g., "Answer: Zone C")
       const match = answer.match(/Zone\s([A-Z])/i);
       if (match && geoJsonLayer) {
         const zoneName = `Zone ${match[1].toUpperCase()}`;
@@ -61,10 +62,10 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
           if (props.name === zoneName) {
             const [lng, lat] = coords;
 
-            // Clear previous highlight
+            // Clear last marker
             if (lastHighlight) map.removeLayer(lastHighlight);
 
-            // Add glowing highlight
+            // Add glowing circle to highlight
             lastHighlight = L.circleMarker([lat, lng], {
               radius: 10,
               color: "#00ff00",
@@ -78,7 +79,7 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
       }
     })
     .catch(err => {
-      console.error("❌ Backend error:", err);
-      result.innerText = "❌ Failed to connect to AI backend.";
+      console.error("❌ API Error:", err);
+      result.innerText = "❌ Could not connect to AI.";
     });
 });
