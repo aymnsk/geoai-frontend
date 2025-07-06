@@ -1,4 +1,4 @@
-// 🌍 Initialize Leaflet map
+// 🌍 Initialize the map
 const map = L.map('map').setView([28.75, 77.2], 11);
 
 // 🗺️ Add OpenStreetMap tiles
@@ -11,14 +11,13 @@ let geoJsonLayer = null;
 let geoData = null;
 let lastHighlight = null;
 
-// 📦 Load local GeoJSON hosted in GitHub Pages
-fetch("data.zones.geojson")  
-")
+// 📦 Load zones.geojson from GitHub Pages
+fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
   .then(response => response.json())
   .then(data => {
     geoData = data;
 
-    // Add GeoJSON zones to the map
+    // Display all zones
     geoJsonLayer = L.geoJSON(geoData, {
       onEachFeature: (feature, layer) => {
         const props = feature.properties;
@@ -30,10 +29,10 @@ fetch("data.zones.geojson")
   })
   .catch(error => {
     console.error("❌ Failed to load GeoJSON:", error);
-    alert("Could not load map zones.");
+    alert("Error loading zone data");
   });
 
-// 🧠 Ask AI and highlight result
+// 🧠 Handle AI query
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -51,7 +50,7 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
       const answer = data.answer || "❌ No answer from AI.";
       result.innerText = answer;
 
-      // 🔍 Try to find the mentioned zone (e.g., "Answer: Zone C")
+      // Highlight zone if mentioned in response (e.g., "Zone C")
       const match = answer.match(/Zone\s([A-Z])/i);
       if (match && geoJsonLayer) {
         const zoneName = `Zone ${match[1].toUpperCase()}`;
@@ -63,10 +62,8 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
           if (props.name === zoneName) {
             const [lng, lat] = coords;
 
-            // Clear last marker
             if (lastHighlight) map.removeLayer(lastHighlight);
 
-            // Add glowing circle to highlight
             lastHighlight = L.circleMarker([lat, lng], {
               radius: 10,
               color: "#00ff00",
@@ -80,7 +77,7 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
       }
     })
     .catch(err => {
-      console.error("❌ API Error:", err);
-      result.innerText = "❌ Could not connect to AI.";
+      console.error("❌ Backend error:", err);
+      result.innerText = "❌ Failed to connect to AI backend.";
     });
 });
