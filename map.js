@@ -12,7 +12,7 @@ let geoData = null;
 let lastHighlight = null;
 
 // 📦 Load local GeoJSON hosted in GitHub Pages
-fetch("https://b6fb71eb-1f14-4fe4-a8ff-750b06611f40-00-312lb97pq5f33.sisko.replit.dev/zones")  // ✅ served by Flask
+fetch("data.zones.geojson")  
 ")
   .then(response => response.json())
   .then(data => {
