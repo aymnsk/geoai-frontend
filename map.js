@@ -1,46 +1,84 @@
-// Initialize the map
-var map = L.map('map').setView([28.7, 77.1], 11);
+// 🌍 Initialize the Leaflet map
+const map = L.map('map').setView([28.75, 77.2], 11);
 
-// Add OpenStreetMap base layer
+// 🗺️ Add OpenStreetMap base layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Sample zone data (same as backend, ideally fetched from backend in future)
-const zones = [
-  { name: "Zone A", coords: [28.7, 77.1], color: 'green' },
-  { name: "Zone B", coords: [28.8, 77.2], color: 'red' },
-  { name: "Zone C", coords: [28.75, 77.15], color: 'blue' }
-];
+// 🌐 Global state
+let geoJsonLayer = null;
+let geoData = null;
+let lastHighlight = null;
 
-// Place markers on map
-zones.forEach(zone => {
-  L.marker(zone.coords)
-    .addTo(map)
-    .bindPopup(zone.name);
-});
+// 📦 Load local GeoJSON from /data/zones.geojson
+fetch("data/zones.geojson")
+  .then(response => response.json())
+  .then(data => {
+    geoData = data;
 
-// Handle form submission
-document.getElementById('questionForm').addEventListener('submit', function(e) {
+    geoJsonLayer = L.geoJSON(geoData, {
+      onEachFeature: (feature, layer) => {
+        const props = feature.properties;
+        layer.bindPopup(
+          `<b>${props.name}</b><br>Flood Risk: ${props.flood_risk}<br>Population: ${props.population}`
+        );
+      }
+    }).addTo(map);
+  })
+  .catch(error => {
+    console.error("❌ Failed to load GeoJSON:", error);
+    alert("Error loading zone data.");
+  });
+
+// 🧠 Submit question to backend AI
+document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const question = document.getElementById('question').value;
-  const resultBox = document.getElementById('result');
-  resultBox.innerText = "🧠 Thinking...";
+  const question = document.getElementById("question").value.trim();
+  const result = document.getElementById("result");
+  result.innerText = "🧠 Thinking...";
 
   fetch("https://b6fb71eb-1f14-4fe4-a8ff-750b06611f40-00-312lb97pq5f33.sisko.replit.dev/ask", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ question: question })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question })
   })
-  .then(response => response.json())
-  .then(data => {
-    resultBox.innerText = data.answer || "❌ No response from AI";
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    resultBox.innerText = "❌ Failed to connect to backend.";
-  });
+    .then(res => res.json())
+    .then(data => {
+      const answer = data.answer || "❌ No answer from AI.";
+      result.innerText = answer;
+
+      // Extract zone from "Answer: Zone X"
+      const match = answer.match(/Zone\s([A-Z])/i);
+      if (match && geoJsonLayer) {
+        const zoneName = `Zone ${match[1].toUpperCase()}`;
+
+        geoJsonLayer.eachLayer(layer => {
+          const props = layer.feature.properties;
+          const coords = layer.feature.geometry.coordinates;
+
+          if (props.name === zoneName) {
+            const [lng, lat] = coords;
+
+            // Clear previous highlight
+            if (lastHighlight) map.removeLayer(lastHighlight);
+
+            // Add glowing highlight
+            lastHighlight = L.circleMarker([lat, lng], {
+              radius: 10,
+              color: "#00ff00",
+              fillColor: "#00ff00",
+              fillOpacity: 0.6
+            }).addTo(map).bindPopup(`✅ AI chose: ${zoneName}`).openPopup();
+
+            map.setView([lat, lng], 13);
+          }
+        });
+      }
+    })
+    .catch(err => {
+      console.error("❌ Backend error:", err);
+      result.innerText = "❌ Failed to connect to AI backend.";
+    });
 });
