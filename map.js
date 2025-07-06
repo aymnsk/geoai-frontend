@@ -1,9 +1,9 @@
 // 🌍 Initialize Leaflet map
-const map = L.map("map").setView([28.75, 77.2], 11);
+const map = L.map('map').setView([28.75, 77.2], 11);
 
-// 🗺️ Add OpenStreetMap base layer
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "&copy; OpenStreetMap contributors"
+// 🗺️ Add OpenStreetMap tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 // 🌐 Globals
@@ -17,7 +17,7 @@ fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
   .then(data => {
     geoData = data;
 
-    // Render each zone with popup info
+    // Add zones to the map
     geoJsonLayer = L.geoJSON(geoData, {
       onEachFeature: (feature, layer) => {
         const props = feature.properties;
@@ -28,11 +28,11 @@ fetch("https://aymnsk.github.io/geoai-frontend/zones.geojson")
     }).addTo(map);
   })
   .catch(error => {
-    console.error("❌ Failed to load zones.geojson:", error);
-    alert("Could not load zone data.");
+    console.error("❌ Failed to load GeoJSON:", error);
+    alert("Failed to load zone data.");
   });
 
-// 🧠 Ask AI and show result
+// 🧠 Handle form submission
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -40,39 +40,40 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
   const result = document.getElementById("result");
   result.innerText = "🧠 Thinking...";
 
-  // 🌐 Call Flask backend
   fetch("https://b6fb71eb-1f14-4fe4-a8ff-750b06611f40-00-312lb97pq5f33.sisko.replit.dev/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question: question })
+    body: JSON.stringify({ question })
   })
     .then(res => res.json())
     .then(data => {
-      const answer = data.answer || "❌ No response from AI.";
+      const answer = data.answer || "❌ No answer from AI.";
       result.innerText = answer;
 
-      // Extract "Zone X" from answer
+      // 🌟 Extract the zone from the answer
       const match = answer.match(/Zone\s([A-Z])/i);
       if (match && geoJsonLayer) {
         const zoneName = `Zone ${match[1].toUpperCase()}`;
 
         geoJsonLayer.eachLayer(layer => {
           const props = layer.feature.properties;
-          if (props.name === zoneName) {
-            const [lng, lat] = layer.feature.geometry.coordinates;
+          const coords = layer.feature.geometry.coordinates;
 
-            // Remove old highlight
+          if (props.name === zoneName) {
+            const [lng, lat] = coords;
+
+            // Remove previous highlight
             if (lastHighlight) map.removeLayer(lastHighlight);
 
-            // Highlight new zone
+            // Add glowing highlight
             lastHighlight = L.circleMarker([lat, lng], {
               radius: 12,
               color: "#00ff00",
               fillColor: "#00ff00",
-              fillOpacity: 0.5
+              fillOpacity: 0.6,
+              weight: 3
             }).addTo(map).bindPopup(`✅ AI chose: ${zoneName}`).openPopup();
 
-            // Zoom to zone
             map.setView([lat, lng], 13);
           }
         });
