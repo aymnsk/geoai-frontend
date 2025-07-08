@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Malviya Nagar",
+        "flood_risk": 2,
+        "population": 13000,
+        "facilities": ["school", "hospital"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.8235, 26.8505]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Vaishali Nagar",
+        "flood_risk": 1,
+        "population": 12000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.7402, 26.9196]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mansarovar",
+        "flood_risk": 3,
+        "population": 14000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.7657, 26.8637]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Amer",
+        "flood_risk": 4,
+        "population": 8000,
+        "facilities": ["school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.8505, 26.9855]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Civil Lines",
+        "flood_risk": 2,
+        "population": 9000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [75.8121, 26.9038]
+      }
+    }
+  ]
+}
