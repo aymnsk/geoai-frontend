@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🧠 GeoAI — Smart Zone Recommender</title>
 
-  <!-- ✅ Leaflet (without integrity attributes to avoid blocking) -->
+  <!-- ✅ Leaflet (no integrity attribute to avoid browser blocking) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
@@ -28,7 +28,21 @@
     }
 
     form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
       margin-bottom: 1em;
+      align-items: center;
+    }
+
+    select, input, button {
+      padding: 0.5em;
+      font-size: 1em;
+    }
+
+    #question {
+      flex: 1;
+      min-width: 200px;
     }
 
     #result {
@@ -46,13 +60,25 @@
   <main>
     <h1>🧠 GeoAI — Smart Zone Recommender</h1>
     <form id="questionForm">
-      <input type="text" id="question" placeholder="Ask: Best zone to build a hospital?" style="width: 60%;" required />
+      <select id="city">
+        <option value="delhi">Delhi</option>
+        <option value="mumbai">Mumbai</option>
+        <option value="chennai">Chennai</option>
+        <option value="bangalore">Bangalore</option>
+        <option value="hyderabad">Hyderabad</option>
+        <option value="kolkata">Kolkata</option>
+        <option value="pune">Pune</option>
+        <option value="jaipur">Jaipur</option>
+        <option value="lucknow">Lucknow</option>
+        <option value="ahmedabad">Ahmedabad</option>
+      </select>
+      <input type="text" id="question" placeholder="Ask: Best zone to build a hospital?" required />
       <button type="submit">Ask AI</button>
     </form>
     <div id="result">Answer will appear here...</div>
   </main>
 
-  <!-- ✅ Your map logic -->
+  <!-- ✅ Map logic -->
   <script src="map.js"></script>
 </body>
 </html>
