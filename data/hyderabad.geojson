@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Banjara Hills",
+        "flood_risk": 1,
+        "population": 11000,
+        "facilities": ["hospital", "school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.4483, 17.4195]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Miyapur",
+        "flood_risk": 3,
+        "population": 15000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.3631, 17.4943]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gachibowli",
+        "flood_risk": 2,
+        "population": 17000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.3498, 17.4445]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Secunderabad",
+        "flood_risk": 4,
+        "population": 13000,
+        "facilities": ["school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.5047, 17.4399]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Begumpet",
+        "flood_risk": 2,
+        "population": 12500,
+        "facilities": ["hospital", "school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78.4609, 17.4433]
+      }
+    }
+  ]
+}
