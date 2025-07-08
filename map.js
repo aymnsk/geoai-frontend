@@ -1,26 +1,28 @@
-// 🌍 Initialize the map
-const map = L.map("map").setView([28.6139, 77.2090], 11); // Default to Delhi
+// 🌍 Initialize map
+const map = L.map("map").setView([28.75, 77.2], 11);
 
-// 🗺️ Add OpenStreetMap tile layer
+// 🗺️ Add base tiles
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-// 🌐 Global variables
+// 🔁 Global state
 let geoJsonLayer = null;
 let geoData = null;
 let lastHighlight = null;
 
-// 🔄 Load geojson for selected city
-function loadGeoJSON(city) {
-  fetch(`https://aymnsk.github.io/geoai-frontend/data/${city}.geojson`)
+// 🔁 Load GeoJSON by city
+function loadGeoJson(city) {
+  const url = `https://aymnsk.github.io/geoai-frontend/data/${city}.geojson`;
+
+  fetch(url)
     .then(res => res.json())
     .then(data => {
       geoData = data;
 
       if (geoJsonLayer) map.removeLayer(geoJsonLayer);
 
-      geoJsonLayer = L.geoJSON(data, {
+      geoJsonLayer = L.geoJSON(geoData, {
         onEachFeature: (feature, layer) => {
           const props = feature.properties;
           layer.bindPopup(
@@ -29,27 +31,31 @@ function loadGeoJSON(city) {
         }
       }).addTo(map);
 
-      const [lng, lat] = data.features[0].geometry.coordinates;
+      const first = geoData.features[0];
+      const [lng, lat] = first.geometry.coordinates;
       map.setView([lat, lng], 11);
     })
     .catch(err => {
       console.error("❌ Failed to load GeoJSON:", err);
-      alert("Failed to load zone data.");
+      alert("Error loading zone data.");
     });
 }
 
-// ⬇️ On city change
-document.getElementById("city").addEventListener("change", (e) => {
-  const city = e.target.value;
-  loadGeoJSON(city);
+// 📍 Initial load (default to Delhi)
+const citySelect = document.getElementById("city");
+loadGeoJson(citySelect.value);
+
+// 🎯 Reload on city change
+citySelect.addEventListener("change", () => {
+  loadGeoJson(citySelect.value);
 });
 
-// 🧠 Submit question to AI
+// 🧠 Ask AI
 document.getElementById("questionForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const city = citySelect.value;
   const question = document.getElementById("question").value.trim();
-  const city = document.getElementById("city").value;
   const result = document.getElementById("result");
   result.innerText = "🧠 Thinking...";
 
@@ -60,18 +66,18 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
   })
     .then(res => res.json())
     .then(data => {
-      const answer = data.answer || "❌ No answer from AI.";
+      const answer = data.answer || "❌ No response from AI.";
       result.innerText = answer;
 
-      const match = answer.match(/Zone\s(.+)/i);
+      const match = answer.match(/Zone\s([A-Za-z0-9\s]+)/i);
       if (match && geoJsonLayer) {
-        const zoneName = match[1].trim().toUpperCase();
+        const zoneName = match[1].trim();
 
         geoJsonLayer.eachLayer(layer => {
           const props = layer.feature.properties;
           const coords = layer.feature.geometry.coordinates;
 
-          if (props.name.toUpperCase() === zoneName) {
+          if (props.name.toLowerCase() === zoneName.toLowerCase()) {
             const [lng, lat] = coords;
 
             if (lastHighlight) map.removeLayer(lastHighlight);
@@ -93,9 +99,6 @@ document.getElementById("questionForm").addEventListener("submit", function (e) 
     })
     .catch(err => {
       console.error("❌ Backend error:", err);
-      result.innerText = "❌ Could not connect to GeoAI backend.";
+      result.innerText = "❌ Could not connect to backend.";
     });
 });
-
-// 🔃 Initial load
-loadGeoJSON("delhi");
