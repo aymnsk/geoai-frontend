@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "T Nagar",
+        "flood_risk": 2,
+        "population": 14000,
+        "facilities": ["hospital", "school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.2376, 13.0418]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Velachery",
+        "flood_risk": 3,
+        "population": 12000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.2246, 12.9794]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Anna Nagar",
+        "flood_risk": 1,
+        "population": 15000,
+        "facilities": ["hospital"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.2164, 13.0878]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Adyar",
+        "flood_risk": 2,
+        "population": 11000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.2550, 13.0064]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tambaram",
+        "flood_risk": 4,
+        "population": 10000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80.1165, 12.9242]
+      }
+    }
+  ]
+}
