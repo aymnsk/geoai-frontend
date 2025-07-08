@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Andheri",
+        "flood_risk": 3,
+        "population": 20000,
+        "facilities": ["hospital", "school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8467, 19.1197]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Colaba",
+        "flood_risk": 2,
+        "population": 8000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8136, 18.9067]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bandra",
+        "flood_risk": 1,
+        "population": 15000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8407, 19.0602]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dadar",
+        "flood_risk": 4,
+        "population": 12000,
+        "facilities": ["school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8429, 19.0176]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Goregaon",
+        "flood_risk": 2,
+        "population": 10000,
+        "facilities": ["hospital", "school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8423, 19.1551]
+      }
+    }
+  ]
+}
