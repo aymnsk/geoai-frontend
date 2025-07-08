@@ -4,66 +4,66 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Salt Lake",
+        "name": "Shivajinagar",
         "flood_risk": 2,
-        "population": 15000,
-        "facilities": ["school", "hospital"]
+        "population": 20000,
+        "facilities": ["hospital", "school", "shelter"]
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [88.4170, 22.5867]
+        "coordinates": [73.8420, 18.5308]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "Howrah",
-        "flood_risk": 4,
-        "population": 18000,
-        "facilities": ["shelter"]
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [88.3247, 22.5892]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Park Street",
-        "flood_risk": 1,
-        "population": 14000,
-        "facilities": ["hospital", "school"]
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [88.3505, 22.5535]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Dum Dum",
+        "name": "Kothrud",
         "flood_risk": 3,
-        "population": 16000,
+        "population": 24000,
         "facilities": ["school", "shelter"]
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [88.3964, 22.6193]
+        "coordinates": [73.8070, 18.5074]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "Behala",
-        "flood_risk": 2,
-        "population": 13000,
+        "name": "Hadapsar",
+        "flood_risk": 4,
+        "population": 28000,
         "facilities": ["hospital"]
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [88.3081, 22.4956]
+        "coordinates": [73.9340, 18.4963]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Baner",
+        "flood_risk": 1,
+        "population": 22000,
+        "facilities": ["school", "hospital"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.7769, 18.5590]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Viman Nagar",
+        "flood_risk": 2,
+        "population": 19000,
+        "facilities": ["shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.9112, 18.5664]
       }
     }
   ]
