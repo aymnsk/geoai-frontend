@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MG Road",
+        "flood_risk": 2,
+        "population": 16000,
+        "facilities": ["school", "hospital"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.6101, 12.9756]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Whitefield",
+        "flood_risk": 3,
+        "population": 18000,
+        "facilities": ["school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.7500, 12.9698]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Indiranagar",
+        "flood_risk": 1,
+        "population": 15000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.6400, 12.9719]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rajajinagar",
+        "flood_risk": 2,
+        "population": 14000,
+        "facilities": ["school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.5553, 12.9916]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jayanagar",
+        "flood_risk": 2,
+        "population": 13000,
+        "facilities": ["hospital", "school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.5855, 12.9250]
+      }
+    }
+  ]
+}
