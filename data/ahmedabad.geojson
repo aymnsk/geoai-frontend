@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Navrangpura",
+        "flood_risk": 2,
+        "population": 14000,
+        "facilities": ["school", "hospital"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.5887, 23.0300]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Satellite",
+        "flood_risk": 3,
+        "population": 16000,
+        "facilities": ["hospital", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.5650, 23.0210]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Paldi",
+        "flood_risk": 1,
+        "population": 12000,
+        "facilities": ["school"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.5526, 23.0326]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Maninagar",
+        "flood_risk": 4,
+        "population": 11000,
+        "facilities": ["shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.6061, 22.9906]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Thaltej",
+        "flood_risk": 2,
+        "population": 9000,
+        "facilities": ["hospital", "school", "shelter"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.5635, 23.0384]
+      }
+    }
+  ]
+}
